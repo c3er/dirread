@@ -2,10 +2,32 @@
     <head>
         <title>Listing of {{ path }}</title>
     </head>
+    <!--
+    <script src="node_modules/jquery/dist/jquery.js" type="javascript"></script>
+    <script type"javascript">
+        "use strict";
+        $().ready(() => {
+            
+        })
+    </script>
+    -->
     <body>
         <h1>Listing of {{ path }}</h1>
-        <div id"content">
-            {{ message }}
+        <div id="frame">
+            {% for file in files %}
+                <div class="file">
+                    <h2>{{ file.path }}</h2>
+                    {% if file.issupported() %}
+                        <div class="content">
+                            <pre>
+                                {{ file.content }}
+                            </pre>
+                        </div>
+                    {% else %}
+                        <div class="warning">Not supported</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
     </body>
 </html>
