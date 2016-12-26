@@ -3,7 +3,6 @@
 
 
 # Todo:
-# - Better sorting of files (first the files in the highest level etc.)
 # - Support for .gitignore
 # - Syntax highlighting
 
@@ -52,7 +51,6 @@ def collect_subpaths(dirpath):
         files = dir[2]
         for file in files:
             pathlist.append(os.path.join(path, file))
-    pathlist.sort()
     return pathlist
 
 
