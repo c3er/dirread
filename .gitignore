@@ -1,6 +1,6 @@
 .vscode/
-tags
 node_modules/
 
+output/
+tags
 *.log
-output.html

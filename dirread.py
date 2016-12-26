@@ -12,7 +12,11 @@ import sys
 import os
 import string
 
-import jinja2
+import jinja2  # pip install Jinja2
+
+
+OUTDIR = "output"
+OUTFILE = "output.html"
 
 
 class TextFile:
@@ -77,11 +81,21 @@ def istext(filename):
     return count <= nontextlimit
 
 
-def readcontent(path):
+def readfile(path):
     if istext(path):
         with open(path, encoding="utf8") as f:
             return f.read()
     return None
+
+
+def writeoutput(content):
+    outdir = os.path.join(getscriptpath(), OUTDIR)
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
+    outpath = os.path.join(outdir, OUTFILE)
+    
+    with open(outpath, "w", encoding="utf8") as f:
+        f.write(content)
 
 
 def main():
@@ -93,7 +107,7 @@ def main():
         error('Directory not found.')
 
     subpaths = collect_subpaths(dirpath)
-    contents = [readcontent(path) for path in subpaths]
+    contents = [readfile(path) for path in subpaths]
     files = [TextFile(path, content) for path, content in zip(subpaths, contents)]
 
     templatepath = os.path.join(getscriptpath(), "template.html")
@@ -105,9 +119,7 @@ def main():
         path=dirpath,
         files=files
     )
-
-    with open("output.html", "w", encoding="utf8") as f:
-        f.write(rendered)
+    writeoutput(rendered)
 
 
 if __name__ == '__main__':
