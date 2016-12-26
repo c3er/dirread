@@ -14,6 +14,8 @@ import webbrowser
 
 import jinja2  # pip install Jinja2
 
+import gitignore
+
 
 OUTDIR = "output"
 OUTFILE = "output.html"
@@ -51,6 +53,9 @@ def collect_subpaths(dirpath):
         files = dir[2]
         for file in files:
             pathlist.append(os.path.join(path, file))
+        if ".gitignore" in files:
+            ignores = gitignore.parse(os.path.join(path, ".gitignore"))
+            pathlist = [path for path in pathlist if not ignores.matches(path)]
     return pathlist
 
 
