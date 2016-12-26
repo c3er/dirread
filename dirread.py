@@ -11,6 +11,7 @@
 import sys
 import os
 import string
+import webbrowser
 
 import jinja2  # pip install Jinja2
 
@@ -93,9 +94,11 @@ def writeoutput(content):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     outpath = os.path.join(outdir, OUTFILE)
-    
+
     with open(outpath, "w", encoding="utf8") as f:
         f.write(content)
+
+    return outpath
 
 
 def main():
@@ -119,7 +122,9 @@ def main():
         path=dirpath,
         files=files
     )
-    writeoutput(rendered)
+
+    outpath = writeoutput(rendered)
+    webbrowser.open(outpath)
 
 
 if __name__ == '__main__':
