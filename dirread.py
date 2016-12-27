@@ -3,7 +3,7 @@
 
 
 # Todo:
-# - Support for .gitignore
+# - Escape HTML characters
 # - Syntax highlighting
 
 
@@ -46,17 +46,7 @@ def getscriptpath():
 
 
 def collect_subpaths(dirpath):
-    pathlist = []
-    tree = os.walk(dirpath)
-    for dir in tree:
-        path = dir[0]
-        files = dir[2]
-        for file in files:
-            pathlist.append(os.path.join(path, file))
-        if ".gitignore" in files:
-            ignores = gitignore.parse(os.path.join(path, ".gitignore"))
-            pathlist = [path for path in pathlist if not ignores.matches(path)]
-    return pathlist
+    return gitignore.filterpaths(dirpath)
 
 
 # Source http://stackoverflow.com/a/1446870
@@ -65,7 +55,7 @@ def istext(filename):
     try:
         with open(filename, "r+b") as f:
             content = f.read(bytecount)
-    except PermissionError:
+    except (PermissionError, TypeError):
         return False
 
     # Empty files are considered text
