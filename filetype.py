@@ -31,8 +31,10 @@ _prism_types = (
     FileType("Bro"         , "bro"        , prism_name="bro"         ),
     FileType("Bro"         , "br"         , prism_name="bro"         ),
     FileType("C"           , "c"          , prism_name="c"           ),
+    FileType("C"           , "h"          , prism_name="c"           ),
     FileType("C#"          , "cs"         , prism_name="csharp"      ),
     FileType("C++"         , "cpp"        , prism_name="cpp"         ),
+    FileType("C++"         , "hpp"        , prism_name="cpp"         ),
     FileType("CoffeeScript", "coffee"     , prism_name="coffeescript"),
     FileType("CoffeeScript", "litcoffee"  , prism_name="coffeescript"),
     FileType("Crystal"     , "rpt"        , prism_name="crystal"     ),
@@ -134,8 +136,8 @@ _prism_types = (
     FileType("SAS"         , "sas"        , prism_name="sas"         ),
     FileType("Sass (Sass)" , "sass"       , prism_name="sass"        ),
     FileType("Sass (Scss)" , "scss"       , prism_name="scss"        ),
-    FileType("Scala "      , "scala"      , prism_name="scala"       ),
-    FileType("Scala "      , "sc"         , prism_name="scala"       ),
+    FileType("Scala"       , "scala"      , prism_name="scala"       ),
+    FileType("Scala"       , "sc"         , prism_name="scala"       ),
     FileType("Scheme"      , "scm"        , prism_name="scheme"      ),
     FileType("Scheme"      , "ss"         , prism_name="scheme"      ),
     FileType("SQL"         , "sql"        , prism_name="sql"         ),
@@ -153,7 +155,9 @@ _prism_types = (
 
 
 def get(filename):
+    filename = filename.lower()
     for filetype in _prism_types:
-        if filename.endswith("." + filetype.extension):
+        ext = filetype.extension
+        if filename == ext or filename.endswith("." + ext):
             return filetype
     return FileType("Plain text", "", prism_name="none")
