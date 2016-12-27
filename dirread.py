@@ -57,7 +57,7 @@ def istext(filename):
     try:
         with open(filename, "r+b") as f:
             content = f.read(bytecount)
-    except (PermissionError, TypeError):
+    except PermissionError:
         return False
 
     # Empty files are considered text

@@ -58,7 +58,7 @@ def filterpaths(dirpath):
     for file in files:
         filepath = os.path.join(dirpath, file)
         if os.path.isdir(filepath):
-            subfiles.append(filterpaths(filepath))
+            subfiles += filterpaths(filepath)
         else:
             pathlist.append(filepath)
     return pathlist + subfiles
