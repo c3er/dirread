@@ -13,28 +13,28 @@ import enum
 import fnmatch
 
 
-class PatternType(enum.Enum):
+class PathType(enum.Enum):
     unknown = 0
     file = 1
     directory = 2
 
 
 class IgnoreList(collections.UserList):
-    _ignored = [
+    _always_ignored = [
         ".git",
     ]
 
-    def __init__(self, patterns):
-        super().__init__(patterns)
+    def __init__(self, ignores):
+        super().__init__(ignores)
 
     def matches(self, filepath):
         filename = _getlastpathpart(filepath)
-        if filename in self._ignored:
+        if filename in self._always_ignored:
             return True
         if os.path.isdir(filepath):
-            filetype = PatternType.directory
+            filetype = PathType.directory
         else:
-            filetype = PatternType.file
+            filetype = PathType.file
         for ignore in self.data:
             if ignore.matches(filename, filetype):
                 return True
@@ -43,9 +43,9 @@ class IgnoreList(collections.UserList):
 
 def parse(filepath):
     with open(filepath, encoding="utf8") as f:
-        patterns = f.readlines()
-    unfiltered = [_create_ignore(pattern) for pattern in patterns]
-    return IgnoreList([pattern for pattern in unfiltered if pattern is not None])
+        ignores = f.readlines()
+    unfiltered = [_create_ignore(ignore) for ignore in ignores]
+    return IgnoreList([ignore for ignore in unfiltered if ignore is not None])
 
 
 def filterpaths(dirpath):
@@ -69,11 +69,11 @@ class _Ignore:
         (
             self.pattern,
             self.isnegative,
-            self.patterntype,
+            self.filetype,
         ) = self._parse_pattern(pattern)
 
     def matches(self, filename, filetype):
-        result = filetype == self.patterntype and fnmatch.fnmatch(filename, self.pattern)
+        result = filetype == self.filetype and fnmatch.fnmatch(filename, self.pattern)
         if self.isnegative:
             result = not result
         return result
@@ -81,19 +81,19 @@ class _Ignore:
     @staticmethod
     def _parse_pattern(pattern):
         isnegative = False
-        patterntype = PatternType.file
+        filetype = PathType.file
         if pattern.startswith("\\"):
             pattern = pattern[1:]
         elif pattern.startswith("!"):
             isnegative = True
             pattern = pattern[1:]
         if pattern.endswith("/"):
-            patterntype = PatternType.directory
+            filetype = PathType.directory
             pattern = pattern[:-1]
         return (
             pattern,
             isnegative,
-            patterntype,
+            filetype,
         )
 
 

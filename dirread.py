@@ -3,7 +3,6 @@
 
 
 # Todo:
-# - Escape HTML characters
 # - Syntax highlighting
 
 
@@ -11,6 +10,7 @@ import sys
 import os
 import string
 import html
+import shutil
 import webbrowser
 
 import jinja2  # pip install Jinja2
@@ -20,6 +20,7 @@ import gitignore
 
 OUTDIR = "output"
 OUTFILE = "output.html"
+EXTERNALDIR = "external"
 
 
 class TextFile:
@@ -91,6 +92,14 @@ def writeoutput(content):
 
     with open(outpath, "w", encoding="utf8") as f:
         f.write(content)
+    
+    externaldir = os.path.join(getscriptpath(), EXTERNALDIR)
+    externals = os.listdir(externaldir)
+    for ext in externals:
+        shutil.copyfile(
+            os.path.join(externaldir, ext),
+            os.path.join(outdir, ext)
+        )
 
     return outpath
 
