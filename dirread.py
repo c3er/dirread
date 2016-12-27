@@ -10,6 +10,7 @@
 import sys
 import os
 import string
+import html
 import webbrowser
 
 import jinja2  # pip install Jinja2
@@ -29,7 +30,7 @@ class TextFile:
     @property
     def content(self):
         if self.issupported():
-            return "\n" + self._content
+            return "\n" + html.escape(self._content)
         return ""
 
     def issupported(self):
