@@ -3,7 +3,9 @@
 
 
 # Todo:
-# - Syntax highlighting
+# - Better appeareance
+# - Clean up
+# - Documentation
 
 
 import sys
@@ -16,6 +18,7 @@ import webbrowser
 import jinja2  # pip install Jinja2
 
 import gitignore
+import filetype
 
 
 OUTDIR = "output"
@@ -27,6 +30,7 @@ class TextFile:
     def __init__(self, path, content):
         self.path = path
         self._content = content
+        self.type = filetype.get(path)
 
     @property
     def content(self):
