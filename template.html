@@ -6,7 +6,7 @@
         <link href="prism.css" rel="stylesheet"/>
         <style type="text/css">
             body {
-                background: #cccccc;
+                background: #ccc;
             }
             .file {
                 background: #fff;
@@ -28,13 +28,7 @@
                 <h2>{{ file.path }}</h2>
                 <p>Recognized filetype: {{ file.type.name }}</p>
                 {% if file.issupported() %}
-                    <div class="content">
-                        <pre>
-                            <code class="language-{{ file.type.prism_name }}">
-                                {{ file.content }}
-                            </code>
-                        </pre>
-                    </div>
+                    <pre><code class="language-{{ file.type.prism_name }}">{{ file.content }}</code></pre>
                 {% else %}
                     <div class="warning">Not supported</div>
                 {% endif %}

@@ -3,7 +3,6 @@
 
 
 # Todo:
-# - Clean up
 # - Documentation
 
 
@@ -34,7 +33,7 @@ class TextFile:
     @property
     def content(self):
         if self.issupported():
-            return "\n" + html.escape(self._content)
+            return html.escape(self._content)
         return ""
 
     def issupported(self):
