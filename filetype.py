@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
+import misc
+
+
 class FileType:
     def __init__(self, name, extension, *, prism_name=""):
         self.name = name
@@ -155,7 +158,7 @@ _prism_types = (
 
 
 def get(filename):
-    filename = filename.lower()
+    filename = misc.getlastpathpart(filename).lower()
     for filetype in _prism_types:
         ext = filetype.extension
         if filename == ext or filename.endswith("." + ext):

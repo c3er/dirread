@@ -3,7 +3,6 @@
 
 
 # Todo:
-# - Better appeareance
 # - Clean up
 # - Documentation
 

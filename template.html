@@ -1,37 +1,54 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Listing of {{ path }}</title>
-        <link href="prism.css" rel="stylesheet" />
+        <meta charset="utf-8"/>
+        <link href="prism.css" rel="stylesheet"/>
+        <style type="text/css">
+            body {
+                background: #cccccc;
+            }
+            .file {
+                background: #fff;
+                padding: 10px;
+                margin: 10px;
+                box-shadow: 2px 2px 2px #666;
+            }
+            .warning {
+                background: #fc0;
+                font-weight: bold;
+                padding: 5px;
+            }
+        </style>
+        <!--
+        <script src="node_modules/jquery/dist/jquery.js" type="javascript"></script>
+        <script type"javascript">
+            "use strict";
+            $().ready(() => {
+                
+            })
+        </script>
+        -->
     </head>
-    <!--
-    <script src="node_modules/jquery/dist/jquery.js" type="javascript"></script>
-    <script type"javascript">
-        "use strict";
-        $().ready(() => {
-            
-        })
-    </script>
-    -->
     <body>
         <h1>Listing of {{ path }}</h1>
-        <div class="frame">
-            {% for file in files %}
-                <div class="file">
-                    <h2>{{ file.path }}</h2>
-                    {% if file.issupported() %}
-                        <div class="content">
-                            <pre>
-                                <code class="language-{{ file.type.prism_name }}">
-                                    {{ file.content }}
-                                </code>
-                            </pre>
-                        </div>
-                    {% else %}
-                        <div class="warning">Not supported</div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+        {% for file in files %}
+            <div class="file">
+                <h2>{{ file.path }}</h2>
+                <p>Recognized filetype: {{ file.type.name }}</p>
+                {% if file.issupported() %}
+                    <div class="content">
+                        <pre>
+                            <code class="language-{{ file.type.prism_name }}">
+                                {{ file.content }}
+                            </code>
+                        </pre>
+                    </div>
+                {% else %}
+                    <div class="warning">Not supported</div>
+                {% endif %}
+            </div>
+        {% endfor %}
         <script src="prism.js"></script>
     </body>
 </html>
