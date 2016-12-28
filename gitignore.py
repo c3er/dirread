@@ -52,7 +52,7 @@ def filterpaths(dirpath):
     files = os.listdir(dirpath)
     if ".gitignore" in files:
         ignores = parse(os.path.join(dirpath, ".gitignore"))
-        files = [file for file in files if not ignores.matches(file)]
+        files = [file for file in files if not ignores.matches(os.path.join(dirpath, file))]
     pathlist = []
     subfiles = []
     for file in files:
@@ -99,7 +99,8 @@ class _Ignore:
 
 def _create_ignore(pattern):
     pattern = pattern.strip()
-    if not pattern or pattern.startswith("#"):
+    if not pattern or pattern.startswith("#") or pattern.startswith("!"):
+        # XXX Workaround: ignore negative patterns
         return None
     return _Ignore(pattern)
 
