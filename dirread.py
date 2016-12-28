@@ -29,7 +29,7 @@ class TextFile:
     def __init__(self, path, content):
         self.path = path
         self._content = content
-        self.type = filetype.get(path)
+        self.type = filetype.get(path, self.issupported())
 
     @property
     def content(self):

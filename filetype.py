@@ -157,7 +157,9 @@ _prism_types = (
 )
 
 
-def get(filename):
+def get(filename, istext):
+    if not istext:
+        return FileType("Binary", "")
     filename = misc.getlastpathpart(filename).lower()
     for filetype in _prism_types:
         ext = filetype.extension
