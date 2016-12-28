@@ -154,6 +154,9 @@ _prism_types = (
     FileType("YAML"        , "yaml"       , prism_name="yaml"        ),
     FileType("YAML"        , "yml"        , prism_name="yaml"        ),
     FileType("XML"         , "xml"        , prism_name="markup"      ),
+    FileType("DotSettings" , "dotsettings", prism_name="markup"      ),
+    FileType("resx"        , "resx"       , prism_name="markup"      ),
+    FileType("VS project"  , "csproj"     , prism_name="markup"      ),
 )
 
 

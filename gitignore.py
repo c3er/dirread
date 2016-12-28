@@ -24,7 +24,7 @@ class IgnoreList(collections.UserList):
         ".git",
     ]
 
-    def __init__(self, ignores):
+    def __init__(self, ignores=()):
         super().__init__(ignores)
 
     def matches(self, filepath):
@@ -48,17 +48,21 @@ def parse(filepath):
     return IgnoreList([ignore for ignore in unfiltered if ignore is not None])
 
 
-def filterpaths(dirpath):
+def filterpaths(dirpath, higher_ignores=None):
     files = os.listdir(dirpath)
+    if higher_ignores is None:
+        higher_ignores = IgnoreList()
     if ".gitignore" in files:
-        ignores = parse(os.path.join(dirpath, ".gitignore"))
-        files = [file for file in files if not ignores.matches(os.path.join(dirpath, file))]
+        ignores = parse(os.path.join(dirpath, ".gitignore")) + higher_ignores
+    else:
+        ignores = higher_ignores
+    files = [file for file in files if not ignores.matches(os.path.join(dirpath, file))]
     pathlist = []
     subfiles = []
     for file in files:
         filepath = os.path.join(dirpath, file)
         if os.path.isdir(filepath):
-            subfiles += filterpaths(filepath)
+            subfiles += filterpaths(filepath, ignores)
         else:
             pathlist.append(filepath)
     return pathlist + subfiles
