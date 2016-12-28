@@ -1,7 +1,0 @@
-{
-    "name": "dirreader",
-    "description": "Read and display file contents inside the given directory.",
-    "dependencies": {
-        "jquery": "3.1.1"
-    }
-}
