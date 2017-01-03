@@ -50,15 +50,19 @@ def parse(filepath):
 
 def filterpaths(dirpath, higher_ignores=None):
     files = os.listdir(dirpath)
+
     if higher_ignores is None:
         higher_ignores = IgnoreList()
+
     if ".gitignore" in files:
         ignores = parse(os.path.join(dirpath, ".gitignore")) + higher_ignores
     else:
         ignores = higher_ignores
+        
     files = [file for file in files if not ignores.matches(os.path.join(dirpath, file))]
     pathlist = []
     subfiles = []
+
     for file in files:
         filepath = os.path.join(dirpath, file)
         if os.path.isdir(filepath):

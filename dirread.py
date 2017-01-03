@@ -3,7 +3,7 @@
 
 
 # Todo:
-# - Documentation
+# - Tests for gitignore.py
 
 
 import sys
