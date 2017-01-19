@@ -90,14 +90,17 @@ class _Ignore:
     def _parse_pattern(pattern):
         isnegative = False
         filetype = PathType.file
+
         if pattern.startswith("\\"):
             pattern = pattern[1:]
         elif pattern.startswith("!"):
             isnegative = True
             pattern = pattern[1:]
+            
         if pattern.endswith("/"):
             filetype = PathType.directory
             pattern = pattern[:-1]
+
         return (
             pattern,
             isnegative,

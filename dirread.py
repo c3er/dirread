@@ -4,6 +4,7 @@
 
 # Todo:
 # - Tests for gitignore.py
+# - Support for negated patterns in .gitignore files
 
 
 import sys

@@ -37,7 +37,7 @@ It may run with other configurations.
 See [requirements.txt](requirements.txt) for the libraries that are needed. It should be enough to type
 
 ```
-pip install
+pip install -r requirements.txt
 ```
 
 
